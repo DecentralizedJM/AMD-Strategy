@@ -39,12 +39,14 @@ class MarketConfig:
     interval: str = "15m"
     initial_capital: float = 10000.0
 
+import os
+
 @dataclass
 class RexAlgoConfig:
-    webhook_url: str = "https://rexalgo-production.up.railway.app/api/webhooks/strategy"
-    secret: str = "PASTE_WEBHOOK_SECRET_FROM_STRATEGY_STUDIO"
-    strategy_id: str = "PASTE_STRATEGY_ID"
-    dry_run: bool = True
+    webhook_url: str = os.environ.get("REXALGO_WEBHOOK_URL", "https://rexalgo-production.up.railway.app/api/webhooks/strategy")
+    secret: str = os.environ.get("REXALGO_SECRET", "PASTE_WEBHOOK_SECRET_FROM_STRATEGY_STUDIO")
+    strategy_id: str = os.environ.get("REXALGO_STRATEGY_ID", "PASTE_STRATEGY_ID")
+    dry_run: bool = os.environ.get("REXALGO_DRY_RUN", "True").lower() in ("true", "1", "yes")
 
 @dataclass
 class AppConfig:

@@ -83,13 +83,13 @@ from live_runner import CandleAggregator
 agg = CandleAggregator(900)
 closed = []
 for i in range(30):
-    t = 1600000500 + i * 60
+    t = 1800000000 + i * 60
     c = agg.add_1m(t, 100, 105, 95, 102, 10)
     if c:
         closed.append(c)
 assert len(closed) == 1
 c = closed[0]
-assert c[0] == 1600000500
+assert c[0] == 1800000000
 assert c[1] == 100
 assert c[2] == 105
 assert c[3] == 95
@@ -113,9 +113,9 @@ if os.path.exists("alerts.jsonl"):
 from live_runner import LiveRunner
 from data_feed import synth_klines
 runner = LiveRunner()
-df = synth_klines(900, 1600000000000, 1600000000000 + 900 * 200 * 1000)
-runner.df = df.iloc[:-100].copy()
-for i in range(len(df)-100, len(df)):
+df = synth_klines(900, 1600000000000, 1600000000000 + 900 * 2000 * 1000)
+runner.df = df.iloc[:-1000].copy()
+for i in range(len(df)-1000, len(df)):
     row = df.iloc[i]
     runner.on_closed_candle(int(row.name.timestamp()), row['open'], row['high'], row['low'], row['close'], row['volume'])
 assert os.path.exists("alerts.jsonl")

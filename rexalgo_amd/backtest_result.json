@@ -1935,7 +1935,7 @@
     "dataSource": "synthetic",
     "symbol": "BTCUSDT",
     "interval": "15m",
-    "generatedAt": "2026-07-01T04:05:32Z",
+    "generatedAt": "2026-07-01T04:07:16Z",
     "strategy": "ICT/AMD fine-tuned",
     "note": "",
     "params": {
