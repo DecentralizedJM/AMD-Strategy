@@ -1,0 +1,1 @@
+worker: cd rexalgo_amd && python live_runner.py
