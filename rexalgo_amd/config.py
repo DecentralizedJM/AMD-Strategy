@@ -19,12 +19,12 @@ class StrategyParams:
     min_stop_atr: float = 0.5
     sl_atr: float = 0.5
     tp1_r: float = 1.5
-    tp1_frac: float = 0.5
-    breakeven_after_tp1: bool = True
+    tp1_frac: float = 1.0
+    breakeven_after_tp1: bool = False
     tp_final_r: float = 3.0
-    trend_filter: str = "ema"
+    trend_filter: str = "none"
     trend_ema: int = 200
-    session_filter: bool = True
+    session_filter: bool = False
     killzones_utc: List[Tuple[int, int]] = field(default_factory=lambda: [(7, 10), (12, 15)])
     cooldown_bars: int = 4
     risk_pct: float = 0.01
