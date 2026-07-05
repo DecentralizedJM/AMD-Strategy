@@ -1,9 +1,9 @@
 # Runtime logs
 rexalgo_amd/alerts.jsonl
 
-# Backtest outputs (generated locally, not committed)
-rexalgo_amd/backtest*.json
-rexalgo_amd/backtest_result.json
+# Backtest outputs (generated locally; commit backtest_result.json when publishing)
+rexalgo_amd/backtest_*.json
+!rexalgo_amd/backtest_result.json
 
 __pycache__/
 *.pyc

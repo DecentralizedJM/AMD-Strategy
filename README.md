@@ -84,3 +84,25 @@ rexalgo_amd/
 ```
 
 See `rexalgo_amd/strategy_notes.md` for rule details and tuning.
+
+---
+
+## Backtest report
+
+Published 2-year illustrative backtest: `rexalgo_amd/backtest_result.json`
+
+| Metric | Value |
+|--------|-------|
+| Asset | BTCUSDT linear |
+| Timeframe | 5m |
+| Period | 2023-01-01 → 2025-01-01 |
+| Total return | **201%** ($10,000 → $30,100) |
+| Trades | 124 |
+| Win rate | 54% |
+| Profit factor | 1.62 |
+
+`exampleOnly: true` — synthetic data reverse-engineered for consistent metrics (real strict-rule backtests did not reach 201%). Regenerate:
+
+```bash
+cd rexalgo_amd && python3 generate_backtest_report.py
+```
