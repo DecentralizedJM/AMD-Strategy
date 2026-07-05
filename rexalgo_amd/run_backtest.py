@@ -10,7 +10,7 @@ def main():
     parser = argparse.ArgumentParser(description="RexAlgo AMD Backtester")
     parser.add_argument("--source", choices=["auto", "mudrex", "bybit", "synthetic"], default="auto")
     parser.add_argument("--symbol", default="BTCUSDT")
-    parser.add_argument("--interval", default="15m")
+    parser.add_argument("--interval", default="5m")
     parser.add_argument("--start", help="YYYY-MM-DD")
     parser.add_argument("--end", help="YYYY-MM-DD")
     parser.add_argument("--out", default="backtest_result.json")

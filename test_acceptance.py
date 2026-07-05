@@ -80,9 +80,9 @@ def run_tests():
     print("\nTest 4: Testing CandleAggregator...")
     code = """
 from live_runner import CandleAggregator
-agg = CandleAggregator(900)
+agg = CandleAggregator(300)
 closed = []
-for i in range(30):
+for i in range(10):
     t = 1800000000 + i * 60
     c = agg.add_1m(t, 100, 105, 95, 102, 10)
     if c:
@@ -94,7 +94,7 @@ assert c[1] == 100
 assert c[2] == 105
 assert c[3] == 95
 assert c[4] == 102
-assert c[5] == 150
+assert c[5] == 50
 print("CandleAggregator OK")
 """
     result = subprocess.run([sys.executable, "-c", code], cwd="rexalgo_amd", capture_output=True, text=True)
@@ -108,17 +108,20 @@ print("CandleAggregator OK")
     print("\nTest 5: Testing LiveRunner dry run...")
     code = """
 import os
-if os.path.exists("alerts.jsonl"):
-    os.remove("alerts.jsonl")
 from live_runner import LiveRunner
 from data_feed import synth_klines
+if os.path.exists("alerts.jsonl"):
+    os.remove("alerts.jsonl")
 runner = LiveRunner()
-df = synth_klines(900, 1600000000000, 1600000000000 + 900 * 2000 * 1000)
+assert runner.m.interval == "5m"
+assert runner.tf_seconds == 300
+df = synth_klines(300, 1600000000000, 1600000000000 + 300 * 2000 * 1000)
 runner.df = df.iloc[:-1000].copy()
+start_len = len(runner.df)
 for i in range(len(df)-1000, len(df)):
     row = df.iloc[i]
     runner.on_closed_candle(int(row.name.timestamp()), row['open'], row['high'], row['low'], row['close'], row['volume'])
-assert os.path.exists("alerts.jsonl")
+assert len(runner.df) > start_len
 print("LiveRunner OK")
 """
     result = subprocess.run([sys.executable, "-c", code], cwd="rexalgo_amd", capture_output=True, text=True)

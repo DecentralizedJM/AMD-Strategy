@@ -1,1 +1,1 @@
-worker: cd rexalgo_amd && python live_runner.py
+worker: cd rexalgo_amd && python3 live_runner.py

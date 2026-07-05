@@ -36,7 +36,7 @@ class StrategyParams:
 class MarketConfig:
     symbol: str = "BTCUSDT"
     mudrex_asset: str = "BTC/USDT"
-    interval: str = "15m"
+    interval: str = "5m"
     initial_capital: float = 10000.0
 
 import os

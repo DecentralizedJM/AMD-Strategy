@@ -1,49 +1,27 @@
-# RexAlgo AMD Strategy
+# RexAlgo AMD — BTC 5m
 
-A complete, runnable Python project that implements a fine-tuned ICT / AMD (Accumulation → Manipulation → Distribution) trading strategy for BTCUSDT on the 15m timeframe.
+ICT/AMD live signal engine for **BTCUSDT linear, 5-minute candles**.
 
-## Project Structure
-
-- `config.py`: Configuration dataclasses (StrategyParams, MarketConfig, RexAlgoConfig).
-- `indicators.py`: Technical indicators (ATR, EMA, True Range).
-- `strategy.py`: Core strategy logic (accumulation, sweep, displacement).
-- `data_feed.py`: Data fetching from Mudrex, Bybit, and synthetic generator.
-- `backtester.py`: Event-driven backtester.
-- `run_backtest.py`: CLI for running backtests.
-- `rexalgo_client.py`: Webhook client for RexAlgo.
-- `live_runner.py`: Live trading runner with websocket feeds.
-
-## Installation
+## Run live
 
 ```bash
 pip install -r requirements.txt
+export REXALGO_SECRET="your_secret"
+export REXALGO_DRY_RUN="True"
+python3 live_runner.py
 ```
 
-## Running Backtest
+## Optional backtest (local only, not committed)
 
 ```bash
-python run_backtest.py --source synthetic --start 2024-06-01 --end 2025-06-01
+python3 run_backtest.py --source auto --symbol BTCUSDT --interval 5m
 ```
 
-## Running Live
+Output goes to `backtest_result.json` (gitignored).
 
-```python
-from live_runner import LiveRunner
-runner = LiveRunner()
-runner.run()
-```
+## WebSocket flow
 
-## Provider Cheatsheet
+- **Mudrex**: 1m stream → aggregated to 5m in `CandleAggregator`
+- **Bybit fallback**: native `kline.5.BTCUSDT` confirmed candles
 
-- **Mudrex**: Primary data source. REST API for historical data, WebSocket for live 1m candles (aggregated to 15m).
-- **Bybit**: Fallback data source. REST API for historical data, WebSocket for live 15m candles.
-- **Synthetic**: Offline regime-switching OHLCV generator for testing.
-
-## Signal/HMAC Format
-
-Signals are sent as JSON payloads to the configured webhook URL.
-Headers include:
-- `Content-Type: application/json`
-- `X-RexAlgo-Signature: t=<timestamp>,v1=<hmac_sha256>`
-
-The HMAC is calculated using the secret key over the string `{timestamp}.{raw_json_body}`.
+Both paths call the same `detect_setup()` logic before sending RexAlgo webhooks.
