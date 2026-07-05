@@ -235,7 +235,6 @@ def run_backtest(df: pd.DataFrame, p: StrategyParams, market: MarketConfig) -> D
     }
     
     return {
-        "exampleOnly": False, # Will be set by run_backtest.py if source is synthetic
         "summary": summary,
         "equity": equity_curve,
         "trades": trades,

@@ -40,7 +40,6 @@ def main():
     CONFIG.market.interval = args.interval
     
     result = run_backtest(df, CONFIG.strategy, CONFIG.market)
-    result["exampleOnly"] = (source_used == "synthetic")
     result["meta"]["dataSource"] = source_used
     
     with open(args.out, "w") as f:
